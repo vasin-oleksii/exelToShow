@@ -7,7 +7,6 @@ function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
-  // Загрузка и обработка Excel-файла
   useEffect(() => {
     const fetchExcelFile = async () => {
       try {
@@ -25,14 +24,13 @@ function App() {
           setData(sheet.slice(1));
         }
       } catch (error) {
-        console.error("Ошибка загрузки Excel файла:", error);
+        console.error("Помилка завантаження Excel файлу:", error);
       }
     };
 
     fetchExcelFile();
   }, []);
 
-  // Поиск по данным
   const filteredData = useMemo(() => {
     return data.filter((row) =>
       row.some((cell) =>
@@ -41,7 +39,6 @@ function App() {
     );
   }, [data, searchQuery]);
 
-  // Сортировка
   const sortedData = useMemo(() => {
     if (!sortConfig.key) return filteredData;
 
@@ -57,7 +54,6 @@ function App() {
     return sorted;
   }, [filteredData, sortConfig]);
 
-  // Функция сортировки по столбцу
   const requestSort = (columnKey) => {
     let direction = "asc";
     if (sortConfig.key === columnKey && sortConfig.direction === "asc") {
@@ -68,6 +64,27 @@ function App() {
 
   return (
     <div className="app-container">
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <button
+          onClick={() => window.history.back()}
+          className="back-button"
+          style={{ fontSize: "20px", padding: "15px 30px" }}
+        >
+          ⬅ Повернутися назад
+        </button>
+        <img
+          src="https://optim.tildacdn.one/tild6336-6365-4434-a262-313632656537/-/resize/480x/-/format/webp/3910x2910-4.jpg"
+          alt="Sensus Фото"
+          className="sensus-image"
+          onClick={() => window.history.back()}
+        />
+      </div>
       <h1>Sensus.zp.ua - Цiни</h1>
 
       <div className="search-container">
